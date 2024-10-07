@@ -1,0 +1,48 @@
+import tkinter as tk
+from tkinter import messagebox
+import random
+
+# Initialize scores
+user_score = 0
+computer_score = 0
+
+# Set up the main window
+root = tk.Tk()
+root.title("Rock-Paper-Scissors Game")
+
+# Choices
+choices = ["Rock", "Paper", "Scissors"]
+
+# Score Labels
+score_label = tk.Label(root, text=f"User: {user_score} - Computer: {computer_score}")
+score_label.grid(row=0, column=0, columnspan=3)
+
+# Game logic inside the button command
+def play(choice):
+    global user_score, computer_score
+    computer_choice = random.choice(choices)
+    
+    if choice == computer_choice:
+        result = "It's a tie!"
+    elif (choice == "Rock" and computer_choice == "Scissors") or \
+         (choice == "Scissors" and computer_choice == "Paper") or \
+         (choice == "Paper" and computer_choice == "Rock"):
+        result = "You win!"
+        user_score += 1
+    else:
+        result = "You lose!"
+        computer_score += 1
+    
+    # Update score label
+    score_label.config(text=f"User: {user_score} - Computer: {computer_score}")
+    
+    # Display results
+    messagebox.showinfo("Result", f"You chose: {choice}\nComputer chose: {computer_choice}\n{result}")
+
+# Create buttons for user choices
+tk.Button(root, text="Rock", command=lambda: play("Rock")).grid(row=1, column=0)
+tk.Button(root, text="Paper", command=lambda: play("Paper")).grid(row=1, column=1)
+tk.Button(root, text="Scissors", command=lambda: play("Scissors")).grid(row=1, column=2)
+
+# Start the GUI event loop
+root.mainloop()
