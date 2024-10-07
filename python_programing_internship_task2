@@ -1,0 +1,28 @@
+import random
+import string
+import tkinter as tk
+from tkinter import messagebox
+
+# Set up the main window
+root = tk.Tk()
+root.title("Password Generator")
+
+# Create input field and label
+tk.Label(root, text="Enter desired password length:").grid(row=0, column=0)
+entry_length = tk.Entry(root)
+entry_length.grid(row=0, column=1)
+
+# Generate button with inline logic
+generate_button = tk.Button(root, text="Generate Password", command=lambda: [
+    messagebox.showinfo(
+        "Generated Password", 
+        "Your password is: " + ''.join(random.choice(
+            string.ascii_letters + string.digits + string.punctuation
+        ) for _ in range(int(entry_length.get())))
+    )
+    if entry_length.get().isdigit() and int(entry_length.get()) > 0 else messagebox.showerror("Input Error", "Please enter a valid positive number.")
+])
+generate_button.grid(row=1, columnspan=2)
+
+# Start the GUI event loop
+root.mainloop()
